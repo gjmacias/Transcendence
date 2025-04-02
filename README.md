@@ -25,18 +25,18 @@ El proyecto **ft_transcendence** sigue evolucionando y esta vez da un salto impo
 
 Si el equipo detrás del proyecto es **académico** o está enfocado en la **experimentación**, estos cambios pueden ser simplemente una forma de **explorar nuevas tecnologías** y ampliar su conocimiento. 🧠📚
 
-🔹 Cambiar de **Ruby a PHP** no es necesariamente una mejora, pero sí brinda experiencia en otro ecosistema.
-🔹 **PostgreSQL → SQLite** permite usar una base de datos más ligera, aunque con ciertas limitaciones.
+🔹 Cambiar de **Ruby a PHP** no es necesariamente una mejora, pero sí brinda experiencia en otro ecosistema.  
+🔹 **PostgreSQL → SQLite** permite usar una base de datos más ligera, aunque con ciertas limitaciones.  
 
 ## 💼 Enfoque en el Mercado Laboral
 
 Algunos cambios sí reflejan **tendencias actuales** en la industria tecnológica:
 
-✅ **Node.js** en el backend es **muy popular** y más demandado que Django/Ruby.
-✅ **TypeScript** en frontend se ha convertido en el **estándar moderno**.
-✅ **Tailwind CSS** ha ganado terreno sobre Bootstrap en proyectos recientes.
-✅ **BabylonJS** ofrece una alternativa interesante a ThreeJS, con un enfoque más amigable para ciertas aplicaciones.
-✅ **Avalanche** proporciona transacciones más **rápidas y económicas** que Ethereum, apuntando a una mayor eficiencia en blockchain.
+✅ **Node.js** en el backend es **muy popular** y más demandado que Django/Ruby.  
+✅ **TypeScript** en frontend se ha convertido en el **estándar moderno**.  
+✅ **Tailwind CSS** ha ganado terreno sobre Bootstrap en proyectos recientes.  
+✅ **BabylonJS** ofrece una alternativa interesante a ThreeJS, con un enfoque más amigable para ciertas aplicaciones.  
+✅ **Avalanche** proporciona transacciones más **rápidas y económicas** que Ethereum, apuntando a una mayor eficiencia en blockchain.  
 
 ## 📝 Notas Adicionales
 
