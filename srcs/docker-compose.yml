@@ -41,12 +41,18 @@ services:
   waf:
     image: owasp/modsecurity-crs
     container_name: waf
+    volumes:
+      - ./conf/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./conf/modsecurity.conf:/etc/modsecurity/modsecurity.conf:ro
+      - ./conf/crs-setup.conf/etc/modsecurity/crs-setup.conf:ro
+      - ./conf/rules/:/etc/modsecurity/rules:ro
     ports:
       - "8080:80"
     environment:
       - MODSEC_RULE_ENGINE=On
     depends_on:
       - backend
+
   prometheus:
     image: prom/prometheus
     container_name: prometheus
