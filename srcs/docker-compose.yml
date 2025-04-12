@@ -1,92 +1,97 @@
-version: '3.8'
-
 services:
-  backend:
-    image: node:18
-    container_name: backend
-    working_dir: /app
-    volumes:
-      - ./backend:/app
-      - backend_data:/app/data  # Persistencia de datos específicos del backend
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=production
-    command: ["npm", "run", "start"]
-    depends_on:
-      - db
+  backend-SQLite:
+    container_name: backend-SQLite
+    build:
+      context:      ./containers/backend-SQLite
+    env_file:       .env
+    restart:        always
+      
+    networks:       [transcendence]
+    depends_on:     [Node_js]
+    volumes:        [backend-SQLite-data:/var/www/html]
+
+  blockchain:
+    container_name: blockchain
+    build:
+      context:      ./containers/blockchain
+    env_file:       .env
+    restart:        always
+      
+    networks:       [transcendence]
+    depends_on:     [backend-SQLite]
+    volumes:        [blockchain-data:/var/www/html]
 
   frontend:
-    image: node:18
     container_name: frontend
-    working_dir: /app
-    volumes:
-      - ./frontend:/app
-      - frontend_data:/app/data  # Persistencia de archivos del frontend
-    ports:
-      - "5173:5173"
-    environment:
-      - NODE_ENV=production
-    command: ["npm", "run", "dev"]
-    depends_on:
-      - backend
+    build:
+      context:      ./containers/frontend
+    env_file:       .env
+    restart:        always
+      
+    networks:       [transcendence]
+    depends_on:     [WAF]
+    volumes:        [frontend-data:/var/www/html]
 
-  SQLite:
-    image: nouchka/sqlite3
-    container_name: SQLite
-    volumes:
-      - ./data:/root/SQLite  # Volumen de base de datos SQLite
-    restart: always
+  Node_js:
+    container_name: Node_js
+    build:
+      context:      ./containers/Node_js
+    env_file:       .env
+    restart:        always
+      
+    networks:       [transcendence]
+    depends_on:     [frontend]
+    volumes:        [Node_js-data:/var/www/html]
 
-  waf:
-    image: owasp/modsecurity-crs
-    container_name: waf
-    ports:
-      - "8080:80"
-    environment:
-      - MODSEC_RULE_ENGINE=On
-    depends_on:
-      - backend
-  prometheus:
-    image: prom/prometheus
-    container_name: prometheus
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus_data:/prometheus  # Persistencia de datos de Prometheus
-    depends_on:
-      - backend
+  WAF:
+    container_name: WAF
+    build:
+      context:      ./containers/WAF
+    env_file:       .env
+    restart:        on-failure
+
+    ports:          [443:443]
+    networks:       [transcendence]
+    volumes:        [WAF-data:/var/www/html]
+
 
 volumes:
-  data:
-    driver: local
+  backend-SQLite-data:
+    driver:         local
     driver_opts:
-      type: none
-      device: /path/to/your/data/directory
-      o: bind
+      type:         none
+      device:       ./volumes/backend-SQLite
+      o:            bind
 
-  backend_data:
-    driver: local
+  blockchain-data:
+    driver:         local
     driver_opts:
-      type: none
-      device: /path/to/your/backend/data
-      o: bind
+      type:         none
+      device:       ./volumes/blockchain
+      o:            bind
 
-  frontend_data:
-    driver: local
+  frontend-data:
+    driver:         local
     driver_opts:
-      type: none
-      device: /path/to/your/frontend/data
-      o: bind
+      type:         none
+      device:       ./volumes/frontend
+      o:            bind
 
-  prometheus_data:
-    driver: local
+  Node_js-data:
+    driver:         local
     driver_opts:
-      type: none
-      device: /path/to/your/prometheus/data
-      o: bind
+      type:         none
+      device:       ./volumes/Node.js
+      o:            bind
+
+  WAF-data:
+    driver:         local
+    driver_opts:
+      type:         none
+      device:       ./volumes/WAF
+      o:            bind
+
 
 networks:
-  pong_net:
+  transcendence:
     driver: bridge
