@@ -1,5 +1,5 @@
 all: set_host
-	@docker compose -f ./srcs/docker-compose.yml up -d --build
+	@docker-compose -f ./srcs/docker-compose.yml up -d --build
 
 set_host:
 	@if ! grep -q "transcendence.es" /etc/hosts; then \
@@ -7,7 +7,7 @@ set_host:
 	fi
 
 down:
-	@docker compose -f ./srcs/docker-compose.yml down
+	@docker-compose -f ./srcs/docker-compose.yml down
 
 
 remove_host:
@@ -16,8 +16,8 @@ remove_host:
 	fi
 
 clean: down remove_host 
-	@docker rmi srcs-backend-SQLite srcs-blockchain srcs-frontend srcs-Node_js srcs-WAF
-	@docker volume rm srcs_backend-SQLite-data srcs_blockchain-data srcs_frontend-data srcs_Node_js-data srcs_WAF-data
+	@docker rmi srcs-backend-sqlite srcs-blockchain srcs-frontend srcs-node-js srcs-waf
+	@docker volume rm srcs_backend-sqlite-data srcs_blockchain-data srcs_frontend-data srcs_node_js-data srcs_waf-data
 
 
 fclean: clean
