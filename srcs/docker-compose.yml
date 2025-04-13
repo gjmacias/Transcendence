@@ -5,7 +5,8 @@ services:
       context:      ./containers/backend-sqlite
     env_file:       .env
     restart:        always
-      
+    ports:          
+        - "9000:9000" 
     networks:       [transcendence]
     depends_on:     [node_js]
     volumes:        [backend-sqlite-data:/var/www/html]
@@ -27,7 +28,8 @@ services:
       context:      ./containers/frontend
     env_file:       .env
     restart:        always
-      
+    ports:          
+        - "3000:3000" 
     networks:       [transcendence]
     depends_on:     [waf]
     volumes:        [frontend-data:/var/www/html]
@@ -38,7 +40,8 @@ services:
       context:      ./containers/node_js
     env_file:       .env
     restart:        always
-      
+    ports:          
+        - "4000:4000" 
     networks:       [transcendence]
     depends_on:     [frontend]
     volumes:        [node_js-data:/var/www/html]
