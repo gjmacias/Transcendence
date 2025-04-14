@@ -1,100 +1,85 @@
-services:
-  backend-sqlite:
-    container_name: backend-sqlite
-    build:
-      context:      ./containers/backend-sqlite
-    env_file:       .env
-    restart:        always
-    ports:          
-        - "9000:9000" 
-    networks:       [transcendence]
-    depends_on:     [node_js]
-    volumes:        [backend-sqlite-data:/var/www/html]
+version: '3.8'
 
-  blockchain:
-    container_name: blockchain
-    build:
-      context:      ./containers/blockchain
-    env_file:       .env
-    restart:        always
-      
-    networks:       [transcendence]
-    depends_on:     [backend-sqlite]
-    volumes:        [blockchain-data:/var/www/html]
+services:
+  backend:
+    image: node:18
+    container_name: backend
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+      - backend_data:/app/data  # Persistencia de datos específicos del backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    command: ["npm", "run", "start"]
+    depends_on:
+      - db
 
   frontend:
+    image: node:18
     container_name: frontend
-    build:
-      context:      ./containers/frontend
-    env_file:       .env
-    restart:        always
-    ports:          
-        - "3000:3000" 
-    networks:       [transcendence]
-    depends_on:     [waf]
-    volumes:        [frontend-data:/var/www/html]
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - frontend_data:/app/data  # Persistencia de archivos del frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=production
+    command: ["npm", "run", "dev"]
+    depends_on:
+      - backend
 
-  node_js:
-    container_name: node_js
-    build:
-      context:      ./containers/node_js
-    env_file:       .env
-    restart:        always
-    ports:          
-        - "4000:4000" 
-    networks:       [transcendence]
-    depends_on:     [frontend]
-    volumes:        [node_js-data:/var/www/html]
+  SQLite:
+    image: nouchka/sqlite3
+    container_name: SQLite
+    volumes:
+      - ./data:/root/SQLite  # Volumen de base de datos SQLite
+    restart: always
 
-  waf:
-    container_name: waf
-    build:
-      context:      ./containers/waf
-    env_file:       .env
-    restart:        on-failure
 
-    ports:          [443:443]
-    networks:       [transcendence]
-    volumes:        [waf-data:/var/www/html]
 
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus  # Persistencia de datos de Prometheus
+    depends_on:
+      - backend
 
 volumes:
-  backend-sqlite-data:
-    driver:         local
+  data:
+    driver: local
     driver_opts:
-      type:         none
-      device:       ./volumes/backend-sqlite
-      o:            bind
+      type: none
+      device: /path/to/your/data/directory
+      o: bind
 
-  blockchain-data:
-    driver:         local
+  backend_data:
+    driver: local
     driver_opts:
-      type:         none
-      device:       ./volumes/blockchain
-      o:            bind
+      type: none
+      device: /path/to/your/backend/data
+      o: bind
 
-  frontend-data:
-    driver:         local
+  frontend_data:
+    driver: local
     driver_opts:
-      type:         none
-      device:       ./volumes/frontend
-      o:            bind
+      type: none
+      device: /path/to/your/frontend/data
+      o: bind
 
-  node_js-data:
-    driver:         local
+  prometheus_data:
+    driver: local
     driver_opts:
-      type:         none
-      device:       ./volumes/Node.js
-      o:            bind
-
-  waf-data:
-    driver:         local
-    driver_opts:
-      type:         none
-      device:       ./volumes/waf
-      o:            bind
-
+      type: none
+      device: /path/to/your/prometheus/data
+      o: bind
 
 networks:
-  transcendence:
+  pong_net:
     driver: bridge
