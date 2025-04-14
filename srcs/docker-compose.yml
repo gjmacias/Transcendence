@@ -38,7 +38,17 @@ services:
       - ./data:/root/SQLite  # Volumen de base de datos SQLite
     restart: always
 
-
+  waf:
+    image: owasp/modsecurity-crs
+    container_name: waf
+    volumes:
+      - waf_volumes:/data
+    ports:
+      - "443:443"
+    environment:
+      - MODSEC_RULE_ENGINE=On
+    depends_on:
+      - backend
 
   prometheus:
     image: prom/prometheus
