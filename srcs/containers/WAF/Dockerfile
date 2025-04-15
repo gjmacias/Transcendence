@@ -11,7 +11,7 @@ COPY conf/modsecurity.conf /etc/modsecurity.d/owasp-crs/modsecurity.conf
 COPY conf/crs-setup.conf /etc/modsecurity.d/owasp-crs/crs-setup.conf
 COPY conf/rules/ etc/modsecurity.d/owasp-crs/rules/
 
-EXPOSE 8080 8081
+EXPOSE 8080 8443
 
 CMD ["nginx", "-g", "daemon off;"]
 #CMD ["sh", "-c", "cp -r $(pwd)conf/ data && nginx -g 'daemon off;'"]
