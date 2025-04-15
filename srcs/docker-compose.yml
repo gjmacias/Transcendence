@@ -1,14 +1,14 @@
 services:
-  backend-SQLite:
-    container_name: backend-SQLite
+  backend-sqlite:
+    container_name: backend-sqlite
     build:
-      context:      ./containers/backend-SQLite
+      context:      ./containers/backend-sqlite
     env_file:       .env
     restart:        always
       
     networks:       [transcendence]
-    depends_on:     [Node_js]
-    volumes:        [backend-SQLite-data:/var/www/html]
+    depends_on:     [node_js]
+    volumes:        [backend-sqlite-data:/var/www/html]
 
   blockchain:
     container_name: blockchain
@@ -18,7 +18,7 @@ services:
     restart:        always
       
     networks:       [transcendence]
-    depends_on:     [backend-SQLite]
+    depends_on:     [backend-sqlite]
     volumes:        [blockchain-data:/var/www/html]
 
   frontend:
@@ -29,38 +29,38 @@ services:
     restart:        always
       
     networks:       [transcendence]
-    depends_on:     [WAF]
+    depends_on:     [waf]
     volumes:        [frontend-data:/var/www/html]
 
-  Node_js:
-    container_name: Node_js
+  node_js:
+    container_name: node_js
     build:
-      context:      ./containers/Node_js
+      context:      ./containers/node_js
     env_file:       .env
     restart:        always
       
     networks:       [transcendence]
     depends_on:     [frontend]
-    volumes:        [Node_js-data:/var/www/html]
+    volumes:        [node_js-data:/var/www/html]
 
-  WAF:
-    container_name: WAF
+  waf:
+    container_name: waf
     build:
-      context:      ./containers/WAF
+      context:      ./containers/waf
     env_file:       .env
     restart:        on-failure
 
     ports:          [443:443]
     networks:       [transcendence]
-    volumes:        [WAF-data:/var/www/html]
+    volumes:        [waf-data:/var/www/html]
 
 
 volumes:
-  backend-SQLite-data:
+  backend-sqlite-data:
     driver:         local
     driver_opts:
       type:         none
-      device:       ./volumes/backend-SQLite
+      device:       ./volumes/backend-sqlite
       o:            bind
 
   blockchain-data:
@@ -77,18 +77,18 @@ volumes:
       device:       ./volumes/frontend
       o:            bind
 
-  Node_js-data:
+  node_js-data:
     driver:         local
     driver_opts:
       type:         none
-      device:       ./volumes/Node.js
+      device:       ./volumes/node.js
       o:            bind
 
-  WAF-data:
+  waf-data:
     driver:         local
     driver_opts:
       type:         none
-      device:       ./volumes/WAF
+      device:       ./volumes/waf
       o:            bind
 
 
