@@ -4,7 +4,11 @@ ARG PHP_VERSION=8.2
 FROM		php:${PHP_VERSION}-fpm
 
 # Instalamos extensiones necesarias para SQLite
-RUN			docker-php-ext-install pdo pdo_sqlite
+RUN apt-get update && apt-get install -y \
+    libsqlite3-dev \
+    && docker-php-ext-install pdo pdo_sqlite
+
+WORKDIR /var/www/html
 
 # Copiamos script inicio
 COPY		./tools/entrypoint.sh	./entrypoint.sh
@@ -20,7 +24,7 @@ RUN			chmod +x ./entrypoint.sh
 EXPOSE		9000
 
 # Entrypoint para iniciar y cargar DB si hace falta
-ENTRYPOINT	["/entrypoint.sh"]
+ENTRYPOINT ["bash", "./entrypoint.sh"]
 
 # Comando para iniciar PHP-FPM en primer plano
 CMD			["php-fpm${PHP_VERSION}", "-F"]

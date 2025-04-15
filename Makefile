@@ -16,8 +16,8 @@ remove_host:
 	fi
 
 clean: down remove_host 
-	@docker rmi srcs-backend-sqlite srcs-blockchain srcs-frontend srcs-node-js srcs-waf
-	@docker volume rm srcs_backend-sqlite-data srcs_blockchain-data srcs_frontend-data srcs_node_js-data srcs_waf-data
+	@docker rmi srcs-backend-sqlite srcs-blockchain srcs-frontend srcs-node srcs-waf
+	@docker volume rm srcs_backend-sqlite-data srcs_blockchain-data srcs_frontend-data srcs_node-data
 
 
 fclean: clean
