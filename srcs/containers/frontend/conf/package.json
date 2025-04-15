@@ -1,0 +1,13 @@
+{
+	"name": "frontend",
+	"version": "1.0.0",
+	"scripts": {
+	  "build": "tsc && npx tailwindcss -i ./src/input.css -o ./dist/styles.css",
+	  "start": "node server.js"
+	},
+	"devDependencies": {
+	  "tailwindcss": "^3.3.0",
+	  "typescript": "^5.0.0"
+	}
+  }
+  
