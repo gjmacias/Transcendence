@@ -2,7 +2,7 @@ services:
   backend-sqlite:
     container_name: backend-sqlite
     build:
-      context:      ./containers/backend-sqlite
+      context:      /home/oseivane/Transcendence/srcs/containers/backend-sqlite
     env_file:       .env
     restart:        always
       
@@ -27,7 +27,7 @@ services:
       context:      ./containers/frontend
     env_file:       .env
     restart:        always
-      
+    ports:          [3000:3000] 
     networks:       [transcendence]
     depends_on:     [waf]
     volumes:        [frontend-data:/app]
@@ -59,7 +59,7 @@ volumes:
     driver:         local
     driver_opts:
       type:         none
-      device:       ./volumes/backend-sqlite
+      device:       /home/oseivane/Transcendence/srcs/volumes/backend-sqlite
       o:            bind
 
   blockchain-data:
