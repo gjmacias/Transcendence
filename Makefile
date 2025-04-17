@@ -91,7 +91,7 @@ logs-node:
 	@echo "$(BLUE)==> Logs NODE SERVER (Ctrl+C para salir)$(NC)"
 	@$(COMPOSE_CMD) logs -f node
 
-logs-blockchain:
+logs-block:
 	@echo "$(BLUE)==> Logs BLOCKCHAIN (Ctrl+C para salir)$(NC)"
 	@$(COMPOSE_CMD) logs -f blockchain
 
