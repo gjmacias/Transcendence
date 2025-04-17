@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Transcendence MVP</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </head>
+  <body class="p-4 bg-gray-900 text-white">
+    <div id="app">
+      <h1 class="text-3xl mb-4">Login con Google</h1>
+      <div id="g_id_onload"
+           data-client_id="TU_CLIENT_ID_AQUI"
+           data-callback="handleCredentialResponse">
+      </div>
+      <div class="g_id_signin" data-type="standard"></div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
