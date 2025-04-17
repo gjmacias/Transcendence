@@ -69,12 +69,33 @@ prune:  clean
 # Rebuild completo
 re: clean all
 
-#Extras
+#Logs para debuggeo
 
 logs:
 	@echo "$(BLUE)==> Mostrando logs en tiempo real... (Ctrl+C para salir)$(NC)"
 	@$(COMPOSE_CMD) logs -f
 
+logs-waf:
+	@echo "$(BLUE)==> Logs WAF (Ctrl+C para salir)$(NC)"
+	@$(COMPOSE_CMD) logs -f waf
+
+logs-frontend:
+	@echo "$(BLUE)==> Logs FRONTEND (Ctrl+C para salir)$(NC)"
+	@$(COMPOSE_CMD) logs -f frontend
+
+logs-backend:
+	@echo "$(BLUE)==> Logs BACKEND-SQLITE (Ctrl+C para salir)$(NC)"
+	@$(COMPOSE_CMD) logs -f backend-sqlite
+
+logs-node:
+	@echo "$(BLUE)==> Logs NODE SERVER (Ctrl+C para salir)$(NC)"
+	@$(COMPOSE_CMD) logs -f node
+
+logs-blockchain:
+	@echo "$(BLUE)==> Logs BLOCKCHAIN (Ctrl+C para salir)$(NC)"
+	@$(COMPOSE_CMD) logs -f blockchain
+
+#Status para ver que hay encendido y como esta
 status:
 	@echo "$(GREEN)==> Estado actual de los servicios Docker:$(NC)"
 	@docker ps --filter name=backend-sqlite \
