@@ -5,6 +5,7 @@ WORKDIR /app
 # Copiamos primero los archivos necesarios para instalar dependencias
 COPY ./conf/package*.json ./
 RUN npm install
+RUN npm install google-auth-library
 
 # Copiamos el resto del código
 COPY ./conf ./

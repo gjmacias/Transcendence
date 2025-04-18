@@ -105,5 +105,5 @@ status:
 	           --filter name=waf
 
 
-.PHONY: all waf frontend backend node blockchain set_host down remove_host clean fclean re
+.PHONY: all waf frontend backend node blockchain set_host down remove_host clean fclean re logs logs-waf logs-frontend logs-backend logs-node logs-blockchain
 
