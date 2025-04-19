@@ -38,10 +38,12 @@ services:
       context:      ./containers/node
     env_file:       .env
     restart:        always
-      
+    ports:
+      - "4000:4000" 
     networks:       [transcendence]
     depends_on:     [frontend]
-    volumes:        [node-data:/app]
+    volumes:        
+      - ./containers/node:/app
 
   waf:
     container_name: waf
